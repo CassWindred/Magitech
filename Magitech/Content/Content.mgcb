@@ -25,6 +25,13 @@
 /processorParam:TextureFormat=Color
 /build:ball.png
 
+#begin Fonts/Arial.spritefont
+/importer:FontDescriptionImporter
+/processor:LocalizedFontProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Arial.spritefont
+
 #begin Hatt.png
 /importer:TextureImporter
 /processor:TextureProcessor
