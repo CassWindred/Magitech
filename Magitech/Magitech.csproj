@@ -60,11 +60,15 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ClassBin\CameraManager.cs" />
     <Compile Include="ClassBin\Components\FreePosition.cs" />
+    <Compile Include="ClassBin\Components\HexBase.cs" />
     <Compile Include="ClassBin\Components\Velocity.cs" />
     <Compile Include="ClassBin\Components\Player.cs" />
     <Compile Include="ClassBin\Components\Sprite.cs" />
     <Compile Include="ClassBin\Keybinds.cs" />
+    <Compile Include="ClassBin\HexMap.cs" />
+    <Compile Include="ClassBin\TextureManager.cs" />
     <Compile Include="ClassBin\Systems\PlayerMovementSystem.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Program.cs" />

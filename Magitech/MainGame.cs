@@ -9,6 +9,7 @@ using MonoGame.Extended.ViewportAdapters;
 using MonoGame.Extended.Entities;
 using Magitech.Systems;
 using Magitech.Components;
+using System.IO;
 
 namespace Magitech
 {
@@ -17,9 +18,12 @@ namespace Magitech
     /// </summary>
     public class MainGame : Game
     {
+        bool initialisationComplete = false;
+
         World world;
 
         Entity player;
+        HexMap loadedMap;
 
 
         Keybinds keybinds = new Keybinds();
@@ -28,13 +32,14 @@ namespace Magitech
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteBatch guiSpriteBatch;
+
         OrthographicCamera camera;
+
+        Dictionary<string, Texture2D> textureStore;
 
         Vector2 mouseWorldPosition;
 
         SpriteFont arialFont;
-
-        
 
         public MainGame()
         {
@@ -48,7 +53,6 @@ namespace Magitech
 
 
 
-
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -57,16 +61,21 @@ namespace Magitech
         /// </summary>
         protected override void Initialize()
         {
+            
+
             // TODO: Add your initialization logic here
             BoxingViewportAdapter viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 1000, 800);
             camera = new OrthographicCamera(viewportAdapter);
+            CameraManager.mainCamera = camera;
+            Debug.WriteLine(camera.GetType());
+            Debug.WriteLine("Camera: " + camera.ToString());
 
             world = new WorldBuilder()
-                .AddSystem(new DynamicRenderSystem(GraphicsDevice, camera))
+                .AddSystem(new DynamicRenderSystem(GraphicsDevice))
                 .AddSystem(new PlayerMovementSystem(keybinds))
                 .Build();
 
-
+            //Initialise Player Entity
             player =  world.CreateEntity();
             FreePosition playerposition = new FreePosition();
             Velocity playerspeed = new Velocity();
@@ -79,9 +88,12 @@ namespace Magitech
 
 
 
+
             this.IsMouseVisible = true;
 
             base.Initialize();
+            initialisationComplete = true;
+
         }
 
         /// <summary>
@@ -95,13 +107,20 @@ namespace Magitech
             guiSpriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            String playerTextureName = "hat";
+            String playerTextureName = "playerHat";
             Texture2D playerTexture = Content.Load<Texture2D>(playerTextureName);
             player.Attach(new Sprite(textureName: playerTextureName, texture: playerTexture));
 
+            //string[] hexfloors = Directory.GetFiles("Content\\HexFloors");
+            textureStore = new Dictionary<string, Texture2D>();
+            TextureManager.textureStore = textureStore;
+            textureStore.Add("GreenHex", Content.Load<Texture2D>("HexFloors/GreenHex"));
 
             arialFont = Content.Load<SpriteFont>("Fonts/Arial");
 
+
+            //Load Initial empty map
+            loadedMap = HexMap.GetEmptyHexMap(100, 100, GraphicsDevice);
         }
 
         /// <summary>
@@ -151,7 +170,11 @@ namespace Magitech
             {
                 camera.Move(new Vector2(movementSpeed, 0) * deltaTime);
             }
-            mouseWorldPosition = camera.ScreenToWorld(new Vector2(mstate.X, mstate.Y));
+
+            Vector2 mouseScreenPosition = new Vector2(mstate.X, mstate.Y);
+            Debug.WriteLine(initialisationComplete.ToString());
+            
+            mouseWorldPosition = camera.ScreenToWorld(mouseScreenPosition);
             // TODO: Add your update logic here
 
             world.Update(gameTime);
@@ -171,16 +194,23 @@ namespace Magitech
 
 
 
-            guiSpriteBatch.Begin();
-            string mousePositionText = "Mouse Cursor Position: "+mouseWorldPosition.ToString() ;
-            //guiSpriteBatch.DrawString(arialFont, "Test", new Vector2(100, 100), Color.Black);
-            Vector2 textMiddlePoint = arialFont.MeasureString(mousePositionText) / 2;
-            guiSpriteBatch.DrawString(arialFont, mousePositionText, new Vector2(200, 200), Color.Black, 0, textMiddlePoint, 1.0f, SpriteEffects.None, 0.5f);
-            guiSpriteBatch.End();
+            loadedMap.renderMap(gameTime); //Renders the currently loaded hexmap
 
 
             //+ mouseWorldPosition.ToString()
-            world.Draw(gameTime);
+            world.Draw(gameTime); //Runs all the draw systems attached to the World entity manager
+            
+
+            guiSpriteBatch.Begin();
+            Vector2 currentHex = loadedMap.GetHexVectorFromPixelCoord(mouseWorldPosition);
+            string hexPositionText = $"Hex Selected: {currentHex.X}, {currentHex.Y}";
+            string mousePositionText = $"Mouse Cursor Position: {mouseWorldPosition.ToString()}";
+            //guiSpriteBatch.DrawString(arialFont, "Test", new Vector2(100, 100), Color.Black);
+            Vector2 textMiddlePoint = arialFont.MeasureString(mousePositionText) / 2;
+            guiSpriteBatch.DrawString(arialFont, mousePositionText, new Vector2(200, 200), Color.Black, 0, textMiddlePoint, 1.0f, SpriteEffects.None, 1.0f);
+            textMiddlePoint = arialFont.MeasureString(hexPositionText) / 2;
+            guiSpriteBatch.DrawString(arialFont, hexPositionText, new Vector2(200, 240), Color.Black, 0, textMiddlePoint, 1.0f, SpriteEffects.None, 1.0f);
+            guiSpriteBatch.End();
             base.Draw(gameTime);
         }
     }
