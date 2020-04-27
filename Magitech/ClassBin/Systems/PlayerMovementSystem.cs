@@ -5,6 +5,7 @@ using MonoGame.Extended.Entities;
 using MonoGame.Extended.Entities.Systems;
 using Magitech.Components;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace Magitech.Systems
 {
@@ -24,7 +25,9 @@ namespace Magitech.Systems
 
         public override void Update(GameTime gameTime)
         {
+            //Debug.WriteLine($"Running Movement Update on {ActiveEntities.Count} active entities.");
             foreach (var entity in ActiveEntities) {
+                
                 Player player = _playerComponentMapper.Get(entity);
                 Velocity velocity = _velocityComponentMapper.Get(entity);
                 FreePosition freeposition = _freePositionComponentMapper.Get(entity);
