@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.1082
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magitech", "Magitech\Magitech.csproj", "{F6EA3A2D-D35F-450A-9151-2A6D88BAB2C8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "objectConfigs", "objectConfigs", "{A22508A5-1A07-4F1A-97C6-24A3364A9311}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

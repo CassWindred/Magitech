@@ -1,0 +1,40 @@
+{
+	"basic_miner": {
+		"display_name": "Basic Miner",
+		"types": [
+			"BasicMiner",
+			"ParticlePowered"
+		],
+		"inventories": {
+			"item": {
+				"player_accessible": false,
+				"slots": 1
+			},
+			"energy": {
+				"compatibletypes": [
+					"raw_mana",
+					"refined_mana"
+				],
+				"capacity": 500
+			}
+		},
+		"powered": true,
+		"consumespertick": {
+			"raw_mana": 10,
+			"refined_mana": 10
+		},
+		"off_texture": "GroundCracker(Off)",
+		"on_texture": "GroundCracker(On)"
+	},
+	"chest": {
+		"display_name": "Storage Chest",
+		"types": [],
+		"inventories": {
+			"item": {
+				"player_accessible": true,
+				"slots": 40
+			}
+			"powered": false,
+			"on_texture":  "StorageChest"
+		}
+}

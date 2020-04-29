@@ -12,7 +12,7 @@ using Magitech.Systems;
 
 namespace Magitech.Components
 {
-    class HexBase
+    class HexBase //This represents a single hex
     {
         public int q; //column
         public int r; //row
@@ -20,6 +20,7 @@ namespace Magitech.Components
         public string id;
         public string textureName;
         public Texture2D texture;
+        public HexBlock block; //Represents the HexBlock this Hex is part of, or Null if not part of a block
 
         public HexBase(string textureName)
         {

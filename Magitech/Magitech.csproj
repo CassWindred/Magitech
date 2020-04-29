@@ -63,14 +63,21 @@
     <Compile Include="ClassBin\CameraManager.cs" />
     <Compile Include="ClassBin\Components\FreePosition.cs" />
     <Compile Include="ClassBin\Components\HexBase.cs" />
+    <Compile Include="ClassBin\Components\HexBlock.cs" />
+    <Compile Include="ClassBin\Components\ItemInventory.cs" />
+    <Compile Include="ClassBin\Interfaces\IItem.cs" />
+    <Compile Include="ClassBin\Components\Machine.cs" />
+    <Compile Include="ClassBin\Components\Types\MachineBasicMiner.cs" />
     <Compile Include="ClassBin\Components\Velocity.cs" />
     <Compile Include="ClassBin\Components\Player.cs" />
     <Compile Include="ClassBin\Components\Sprite.cs" />
+    <Compile Include="ClassBin\Interfaces\IEnergy.cs" />
     <Compile Include="ClassBin\Keybinds.cs" />
     <Compile Include="ClassBin\HexMap.cs" />
     <Compile Include="ClassBin\GuiManager.cs" />
     <Compile Include="ClassBin\TextureManager.cs" />
     <Compile Include="ClassBin\Systems\PlayerMovementSystem.cs" />
+    <Compile Include="ClassBin\Components\Types\IMachineType.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -808,6 +815,7 @@
     <Content Include="Content\GeonBit.UI\themes\lowres\textures\white_texture.png" />
     <Content Include="Content\GeonBit.UI\themes\lowres\ThemeData.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <Import Project="..\packages\MonoGame.Framework.WindowsDX.3.7.0.1708\build\MonoGame.Framework.WindowsDX.targets" Condition="Exists('..\packages\MonoGame.Framework.WindowsDX.3.7.0.1708\build\MonoGame.Framework.WindowsDX.targets')" />

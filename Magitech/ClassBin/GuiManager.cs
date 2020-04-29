@@ -10,6 +10,7 @@ using Magitech.Systems;
 using GeonBit.UI;
 using GeonBit.UI.Entities;
 using Microsoft.Xna.Framework.Content;
+using Magitech.Components;
 
 namespace Magitech
 {
@@ -57,6 +58,11 @@ namespace Magitech
         public void activatePlayMenu()
         {
             UserInterface.Active = playInterface;
+        }
+
+        public void addHexInfoWindow(Vector2 position, HexBase hexbase)
+        {
+
         }
 
         private void initPlayInterface()
